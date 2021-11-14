@@ -11,6 +11,20 @@ on:
       - main
 
 jobs:
+  Test-Checks:
+    name: Testing the checks API wrapper action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: LouisBrunner/checks-action@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Readme
+          conclusion: neutral
+          output: |
+            {"summary":"hello","text":"world"}
+          output_text_description_file: README.md
+
   Lint-Style:
     name: Lint & check code style
     runs-on: ubuntu-latest
