@@ -1,3 +1,9 @@
+# Passing the following argument on the command line to nix-build will allow
+# cross compiling the static executable only:
+#   --argstr system aarch64-linux
+# See https://github.com/NixOS/nixpkgs/blob/master/lib/systems/doubles.nix for config values.
+{ system ? builtins.currentSystem }:
+
 let
   name =
     "postgrest";
@@ -65,7 +71,7 @@ let
   # Function that derives a fully static Haskell package based on
   # nh2/static-haskell-nix
   staticHaskellPackage =
-    import nix/static-haskell-package.nix { inherit nixpkgs compiler patches allOverlays; };
+    import nix/static-haskell-package.nix { inherit nixpkgs compiler system patches allOverlays; };
 
   # Options passed to cabal in dev tools and tests
   devCabalOptions =

@@ -1,5 +1,5 @@
 # Derive a fully static Haskell package based on musl instead of glibc.
-{ nixpkgs, compiler, patches, allOverlays }:
+{ nixpkgs, compiler, system, patches, allOverlays }:
 
 name: src:
 let
@@ -52,7 +52,10 @@ let
 
   # Apply our overlay to the given pkgs.
   normalPkgs =
-    import patchedNixpkgs { inherit overlays; };
+    import patchedNixpkgs {
+      inherit overlays;
+      crossSystem = { inherit system; };
+    };
 
   defaultCabalPackageVersionComingWithGhc =
     {

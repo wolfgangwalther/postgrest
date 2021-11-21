@@ -94,7 +94,14 @@ jobs:
 
 
   Build-Nix:
-    name: Build Linux static (Nix)
+    strategy:
+      fail-fast: false
+      matrix:
+        system:
+          - x86_64-linux
+          - aarch64-linux
+
+    name: Build ${{ matrix.system }} static (Nix)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0
@@ -104,20 +111,20 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
       - name: Build static executable
-        run: nix-build -A postgrestStatic
+        run: nix-build --argstr system ${{ matrix.system }} -A postgrestStatic
       - name: Save built executable as artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: postgrest-linux-static-x64
+          name: postgrest-static-${{ matrix.system }}
           path: result/bin/postgrest
           if-no-files-found: error
 
       - name: Build Docker image
-        run: nix-build -A docker.image --out-link postgrest-docker.tar.gz
+        run: nix-build --argstr system ${{ matrix.system }} -A docker.image --out-link postgrest-docker.tar.gz
       - name: Save built Docker image as artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: postgrest-docker-x64
+          name: postgrest-docker-${{ matrix.system }}
           path: postgrest-docker.tar.gz
           if-no-files-found: error
 
