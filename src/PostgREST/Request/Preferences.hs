@@ -54,7 +54,6 @@ data Preferences
 --     { preferResolution = Just IgnoreDuplicates
 --     , preferRepresentation = Nothing
 --     , preferParameters = Nothing
---     , preferCount = Just ExactCount
 --     , preferTransaction = Nothing
 --     }
 --
