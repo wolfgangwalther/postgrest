@@ -89,7 +89,7 @@ def defaultenv():
         "PGRST_DB_SCHEMAS": os.environ["PGRST_DB_SCHEMAS"],
         "PGRST_DB_ANON_ROLE": os.environ["PGRST_DB_ANON_ROLE"],
         "PGRST_DB_CONFIG": "false",
-        "PGRST_LOG_LEVEL": "info",
+        "PGRST_LOG_LEVEL": "crit",
     }
 
 
