@@ -163,14 +163,28 @@ def run(configpath=None, stdin=None, env=None, port=None, adminport=None):
             command.append(configpath)
 
         process = subprocess.Popen(
-            command, stdin=subprocess.PIPE, stderr=subprocess.PIPE, env=env
+            command,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            env=env,
         )
+
+        # Read all available output without blocking
+        def read_available(stream):
+            os.set_blocking(stream.fileno(), False)
+            ret = stream.read()
+            os.set_blocking(stream.fileno(), True)
+            return ret
 
         try:
             process.stdin.write(stdin or b"")
             process.stdin.close()
 
             wait_until_ready(baseurl)
+
+            read_available(process.stdout)
+            read_available(process.stderr)
 
             yield PostgrestProcess(
                 process=process,
@@ -710,12 +724,9 @@ def test_invalid_role_claim_key_notify_reload(defaultenv):
     with run(env=env) as postgrest:
         postgrest.session.post("/rpc/invalid_role_claim_key_reload")
 
-        # skips the first lines from stderr, the "Attempting to connect to database", "Connection successful", etc.
-        # this is a hack to avoid readline() from locking up the test
-        for _ in range(6):
-            postgrest.process.stderr.readline()
-        assert "failed to parse role-claim-key value" in str(
-            postgrest.process.stderr.readline()
+        assert (
+            "failed to parse role-claim-key value"
+            in postgrest.process.stderr.readline().decode()
         )
 
         postgrest.session.post("/rpc/reset_invalid_role_claim_key")
