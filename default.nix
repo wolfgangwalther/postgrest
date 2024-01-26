@@ -142,7 +142,7 @@ rec {
       inherit (pkgs.haskell.packages."${compiler}") hpc-codecov;
       inherit (pkgs.haskell.packages."${compiler}") weeder;
     };
-} // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux rec {
+
   # Static executable.
   inherit (staticHaskellPackage) postgrestStatic;
   inherit (staticHaskellPackage) packagesStatic;
