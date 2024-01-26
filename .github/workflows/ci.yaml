@@ -259,7 +259,7 @@ jobs:
       - name: Download Docker image
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
-          name: postgrest-docker-x64
+          name: postgrest-linux-docker-x64
       - name: Publish images on Docker Hub
         run: |
           docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
