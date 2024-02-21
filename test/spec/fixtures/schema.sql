@@ -1,5 +1,5 @@
 SET check_function_bodies = false;
--- Hide warnings because casts on domains would show a lot of:
+-- !Hide warnings because casts on domains would show a lot of:
 --  WARNING:  cast will be ignored because the source data type is a domain
 SET client_min_messages = error;
 
