@@ -1,6 +1,6 @@
 .. _sql-user-management-using-postgres-users-and-passwords:
 
-SQL User Management using postgres' users and passwords
+ABC User Management using postgres' users and passwords
 =======================================================
 
 :author: `fjf2002 <https://github.com/fjf2002>`_
