@@ -40,12 +40,15 @@ jobs:
             docker: postgrest-linux-docker-x64
 
           - name: MacOS
-            runs-on: macos-12
+            runs-on: flyci-macos-large-latest-m1
             artifact: postgrest-macos-static-x64
             docker: postgrest-macos-docker-x64
+            volume: disk1
 
     name: Nix - ${{ matrix.name }} static
     runs-on: ${{ matrix.runs-on }}
+      #env:
+      #NIX_VOLUME_USE_SPECIAL: ${{ matrix.volume }}
     steps:
       - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Setup Nix Environment
@@ -54,7 +57,7 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
       - name: Build static executable
-        run: nix-build -A postgrestStatic
+        run: nix-build -j6 -A postgrestStatic --keep-going 2>&1 | grep '^error: builder' -B50
       - name: Save built executable as artifact
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
