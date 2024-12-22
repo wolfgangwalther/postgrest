@@ -2,8 +2,8 @@
 {
   owner = "NixOS";
   repo = "nixpkgs";
-  ref = "refs/heads/nixpkgs-unstable-darwin";
-  date = "2024-11-09";
-  rev = "a90280100f41a10914edfe729a4053e60c92b8e3";
-  tarballHash = "1vwr665b6l6gma24w45q5hic86vbd8alc01mziwwr621hwlca88f";
+  ref = "refs/heads/nixpkgs-unstable";
+  date = "2024-12-23";
+  rev = "fc9c33366b98237cc759cdd90ef6058f5a1cb9dd";
+  tarballHash = "08ya8l1w7wwa66i0r9amqdvqp1mxrrvxbn53c9n98phxzpw2dvsy";
 }
