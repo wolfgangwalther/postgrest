@@ -67,7 +67,7 @@ let
           sha256 = "sha256-tXOMqCO8opMilI9rx0D+njqjIjbZsH168Bzb8Aq8Ff4=";
         }
         {
-          postgresql = super.libpq;
+          postgresql = super.postgresql_16;
         });
     };
 in
