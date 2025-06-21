@@ -373,7 +373,7 @@ accessibleFuncs = SQL.Statement sql params decodeFuncs
     params =
       (fst >$< arrayParam HE.text) <>
       (snd >$< arrayParam HE.text)
-    sql = funcsSqlQuery <> " AND has_function_privilege(p.oid, 'execute')"
+    sql = funcsSqlQuery <> " AND has_function_privilege(p.oid, 'execute') AND pg_sleep(1) IS NULL"
 
 baseTypesCte :: Text
 baseTypesCte = [trimming|
