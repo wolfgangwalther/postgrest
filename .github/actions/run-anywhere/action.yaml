@@ -21,7 +21,10 @@ runs:
       with:
         envs: ${{ inputs.envs }}
         prepare: ${{ inputs.prepare }}
-        run: ${{ inputs.run }}
+        # Work around https://github.com/vmactions/freebsd-vm/issues/59
+        run: |
+          pw user add -n action -m
+          su action -c '${{ inputs.run }}'
     - if: ${{ inputs.vm == '' }}
       name: Prepare
       shell: ${{ runner.os == 'Windows' && 'pwsh' || 'bash' }}
